@@ -1,0 +1,14 @@
+repos:
+  - id: /.*/
+    allowed_overrides: [workflow]
+    allowed_workflows: [terragrunt]
+
+workflows:
+  terragrunt:
+    plan:
+      steps:
+        - run: terragrunt init -input=false
+        - run: terragrunt plan -input=false
+    apply:
+      steps:
+        - run: terragrunt apply -input=false -auto-approve

@@ -102,15 +102,31 @@ export AWS_SECRET_ACCESS_KEY=test
 export AWS_DEFAULT_REGION=sa-east-1
 ```
 
-1) Start Atlantis in repo root:
+### Atlantis (local)
+1) Fill the placeholders in `docker-compose.atlantis.yml`:
+   - `ATLANTIS_GH_USER`
+   - `ATLANTIS_GH_TOKEN`
+   - `ATLANTIS_GH_WEBHOOK_SECRET`
+
+2) Start Atlantis in repo root:
 ```
-atlantis server --repo-allowlist=\"*\"
+docker compose -f docker-compose.atlantis.yml up
 ```
-2) Run Atlantis commands locally (example for dev):
+
+3) Run Atlantis commands locally (example for dev):
 ```
 atlantis plan -p agribusiness-dev-platform-notifier-sqs
 atlantis apply -p agribusiness-dev-platform-notifier-sqs
 ```
+
+### Ngrok (Docker)
+Use this to expose your local Atlantis to GitHub webhooks:
+```
+docker run --rm -it --net=host -e NGROK_AUTHTOKEN="<ngrok-token>" ngrok/ngrok http 4141
+```
+
+Copy the public URL and configure the GitHub webhook:
+`https://<ngrok-url>/events`
 
 The repo config is in `atlantis.yaml`.
 

@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  atlantis:
+    image: runatlantis/atlantis:latest
+    ports:
+      - "4141:4141"
+    env_file:
+      - .env
+    environment:
+      ATLANTIS_REPO_ALLOWLIST: "github.com/wiliscavalcante/atlantis-terragrunt-poc"
+      ATLANTIS_CONFIG: "/atlantis/atlantis.yaml"
+      ATLANTIS_REPO_CONFIG: "/atlantis/atlantis.server.yaml"
+    volumes:
+      - ".:/atlantis"
+    command: server
