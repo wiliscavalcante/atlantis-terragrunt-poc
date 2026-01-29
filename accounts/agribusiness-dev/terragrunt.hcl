@@ -1,5 +1,5 @@
 include "root" {
-  path = find_in_parent_folders()
+  path = "${get_repo_root()}/accounts/terragrunt.hcl"
 }
 
 locals {
