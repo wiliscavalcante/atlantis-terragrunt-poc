@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  localstack:
+    image: localstack/localstack:3.5
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,sqs
+      - DEFAULT_REGION=sa-east-1
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"

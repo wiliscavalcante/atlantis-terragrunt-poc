@@ -1,0 +1,60 @@
+version: 3
+
+projects:
+  - name: agribusiness-dev-platform-notifier-sqs
+    dir: accounts/agribusiness-dev/sa-east-1/platform/notifier-sqs
+    workflow: terragrunt
+    autoplan:
+      when_modified:
+        - "**/*.hcl"
+        - "modules/sqs/*.tf"
+
+  - name: agribusiness-uat-platform-notifier-sqs
+    dir: accounts/agribusiness-uat/sa-east-1/platform/notifier-sqs
+    workflow: terragrunt
+    autoplan:
+      when_modified:
+        - "**/*.hcl"
+        - "modules/sqs/*.tf"
+
+  - name: agribusiness-prod-platform-notifier-sqs
+    dir: accounts/agribusiness-prod/sa-east-1/platform/notifier-sqs
+    workflow: terragrunt
+    autoplan:
+      when_modified:
+        - "**/*.hcl"
+        - "modules/sqs/*.tf"
+
+  - name: agribusiness-dev-app-billing-sqs
+    dir: accounts/agribusiness-dev/sa-east-1/app/billing-sqs
+    workflow: terragrunt
+    autoplan:
+      when_modified:
+        - "**/*.hcl"
+        - "modules/sqs/*.tf"
+
+  - name: agribusiness-uat-app-billing-sqs
+    dir: accounts/agribusiness-uat/sa-east-1/app/billing-sqs
+    workflow: terragrunt
+    autoplan:
+      when_modified:
+        - "**/*.hcl"
+        - "modules/sqs/*.tf"
+
+  - name: agribusiness-prod-app-billing-sqs
+    dir: accounts/agribusiness-prod/sa-east-1/app/billing-sqs
+    workflow: terragrunt
+    autoplan:
+      when_modified:
+        - "**/*.hcl"
+        - "modules/sqs/*.tf"
+
+workflows:
+  terragrunt:
+    plan:
+      steps:
+        - run: terragrunt init -input=false
+        - run: terragrunt plan -input=false
+    apply:
+      steps:
+        - run: terragrunt apply -input=false -auto-approve
