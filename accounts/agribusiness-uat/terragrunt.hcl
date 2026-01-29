@@ -51,3 +51,18 @@ generate "provider" {
   }
   EOF
 }
+
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite"
+  contents  = local.use_localstack ? <<-EOF
+  terraform {
+    backend "local" {}
+  }
+  EOF
+  : <<-EOF
+  terraform {
+    backend "s3" {}
+  }
+  EOF
+}
