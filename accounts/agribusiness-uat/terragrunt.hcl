@@ -20,9 +20,10 @@ inputs = {
 }
 
 remote_state {
-  backend = "s3"
-  disable = local.use_localstack
-  config = {
+  backend = local.use_localstack ? "local" : "s3"
+  config = local.use_localstack ? {
+    path = "${path_relative_to_include()}/terraform.tfstate"
+  } : {
     bucket         = local.backend_bucket
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.region
