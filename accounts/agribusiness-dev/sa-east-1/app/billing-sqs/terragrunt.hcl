@@ -11,7 +11,7 @@ inputs = {
   service = "billing"
 
   fifo_queue                 = false
-  visibility_timeout_seconds = 30
+  visibility_timeout_seconds = 35
   message_retention_seconds  = 345600
 
   tags = {
