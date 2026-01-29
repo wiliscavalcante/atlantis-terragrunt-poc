@@ -2,6 +2,10 @@ locals {
   queue_name = var.queue_name != "" ? var.queue_name : "${var.name_prefix}-${var.domain}-${var.service}-${var.resource}"
 }
 
+terraform {
+  backend "s3" {}
+}
+
 resource "aws_sqs_queue" "this" {
   name                       = local.queue_name
   fifo_queue                 = var.fifo_queue
