@@ -5,6 +5,7 @@ locals {
   environment  = "uat"
   region       = "sa-east-1"
   use_localstack = get_env("USE_LOCALSTACK", "false") == "true"
+  backend_block = local.use_localstack ? "terraform {\n  backend \"local\" {}\n}\n" : "terraform {\n  backend \"s3\" {}\n}\n"
 
   backend_bucket = "tfstate-${local.account_name}"
   lock_table     = "tf-lock-${local.account_name}"
@@ -55,14 +56,5 @@ generate "provider" {
 generate "backend" {
   path      = "backend.tf"
   if_exists = "overwrite"
-  contents  = local.use_localstack ? <<-EOF
-  terraform {
-    backend "local" {}
-  }
-  EOF
-  : <<-EOF
-  terraform {
-    backend "s3" {}
-  }
-  EOF
+  contents  = local.backend_block
 }
