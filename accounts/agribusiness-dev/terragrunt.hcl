@@ -6,6 +6,7 @@ locals {
   region       = "sa-east-1"
   use_localstack = get_env("USE_LOCALSTACK", "false") == "true"
   backend_block = local.use_localstack ? "terraform {\n  backend \"local\" {}\n}\n" : "terraform {\n  backend \"s3\" {}\n}\n"
+  localstack_endpoint = get_env("LOCALSTACK_ENDPOINT", "http://localstack:4566")
 
   backend_bucket = "tfstate-${local.account_name}"
   lock_table     = "tf-lock-${local.account_name}"
@@ -43,8 +44,8 @@ generate "provider" {
     region = "${local.region}"
   ${local.use_localstack ? <<-EOT
     endpoints {
-      s3  = "http://localhost:4566"
-      sqs = "http://localhost:4566"
+      s3  = "${local.localstack_endpoint}"
+      sqs = "${local.localstack_endpoint}"
     }
     s3_use_path_style          = true
     skip_credentials_validation = true
