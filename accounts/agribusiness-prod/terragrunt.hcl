@@ -28,7 +28,6 @@ remote_state {
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = local.region
     dynamodb_table = local.lock_table
-    encrypt        = true
   }
 }
 
