@@ -1,8 +1,5 @@
-include "root" {
-  path = "${get_repo_root()}/accounts/terragrunt.hcl"
-}
-
 locals {
+  organization = "example-org"
   account_name = "agribusiness-dev"
   account_id   = "123456789012"
   environment  = "dev"
