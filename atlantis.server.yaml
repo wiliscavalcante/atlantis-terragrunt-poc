@@ -8,7 +8,7 @@ workflows:
     plan:
       steps:
         - run: terragrunt init -input=false
-        - run: terragrunt plan -input=false
+        - run: terragrunt plan -input=false -out=$PLANFILE
     apply:
       steps:
-        - run: terragrunt apply -input=false -auto-approve
+        - run: terragrunt apply -input=false $PLANFILE
